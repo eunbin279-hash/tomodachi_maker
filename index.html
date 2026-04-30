@@ -195,18 +195,26 @@
 
   <!-- 화면 2: 대사 작성 창 (Speech Screen) -->
   <div id="result-screen" class="screen hidden">
-    <!-- 이 박스 전체가 캡쳐됩니다 -->
-    <div id="capture-area" class="result-container capture-bg">
+    <!-- 반응형 크기 조절을 위한 래퍼 -->
+    <div id="capture-wrapper" class="capture-wrapper">
+      <!-- 이 박스 전체가 캡쳐됩니다 -->
+      <div id="capture-area" class="result-container capture-bg">
+        <!-- 레트로 스캔라인 오버레이 -->
+        <div id="retro-overlay" class="retro-overlay"></div>
 
-      <!-- 캐릭터 결과 -->
-      <div class="result-character" id="result-character">
-        <!-- 자바스크립트로 복사됨 -->
-      </div>
+        <!-- 캐릭터 결과 -->
+        <div class="result-character" id="result-character">
+          <!-- 자바스크립트로 복사됨 -->
+        </div>
 
-      <!-- 하단 반투명 검정 박스 (대사 입력) -->
-      <div class="speech-box">
-        <div class="speech-text-wrapper">
-          <span class="speech-bracket">「</span><span id="result-speech-input" contenteditable="true" class="speech-editable">대사를 입력하세요</span><span class="speech-bracket">」</span>
+        <!-- 캐릭터 이름 표시 -->
+        <div id="result-name-display" class="result-name-display"></div>
+
+        <!-- 하단 반투명 검정 박스 (대사 입력) -->
+        <div class="speech-box">
+          <div class="speech-text-wrapper">
+            <span class="speech-bracket">「</span><span id="result-speech-input" contenteditable="true" class="speech-editable">대사를 입력하세요</span><span class="speech-bracket">」</span>
+          </div>
         </div>
       </div>
     </div>
