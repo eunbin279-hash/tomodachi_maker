@@ -76,35 +76,44 @@ body {
 
 @media (max-width: 768px) {
   body {
-    overflow: hidden; /* 모바일에서 전체 화면 스크롤 방지 */
+    overflow: hidden;
+    /* 모바일에서 전체 화면 스크롤 방지 */
   }
+
   #editor-screen {
     height: 100vh;
     padding: 10px;
     display: flex;
     flex-direction: column;
   }
+
   .editor-container {
     flex-direction: column;
     align-items: center;
     flex: 1;
-    overflow: hidden; /* 넘어가는 영역 잘라내기 */
+    overflow: hidden;
+    /* 넘어가는 영역 잘라내기 */
     margin-bottom: 10px;
     gap: 10px;
   }
+
   .preview-area {
     /* 모바일에서는 캐릭터 뷰 크기를 60%로 줄여서 공간 확보 */
     transform: scale(0.6);
     transform-origin: top center;
-    margin-bottom: -208px; /* 520px - (520px * 0.6) = 208px 만큼 아래 여백 제거 */
+    margin-bottom: -208px;
+    /* 520px - (520px * 0.6) = 208px 만큼 아래 여백 제거 */
     flex-shrink: 0;
   }
+
   .options-area {
     flex: 1;
-    overflow-y: auto; /* 파츠 컨테이너만 위아래로 스크롤 가능 */
+    overflow-y: auto;
+    /* 파츠 컨테이너만 위아래로 스크롤 가능 */
     width: 100%;
     padding-bottom: 20px;
   }
+
   .bottom-controls {
     flex-shrink: 0;
     margin-top: auto;
@@ -460,17 +469,15 @@ body {
 /* 화면상에 보여지는 레트로 스캔라인 (저장 시에는 JS로 완벽하게 렌더링됨) */
 .retro-overlay {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 100;
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.08) 50%); /* 0.15 -> 0.08 불투명도 낮춤 */
+  background:
+    linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.08) 50%);
   background-size: 100% 4px;
-}
-
-/* 프리뷰 화면에서 보여지는 라이브 픽셀레이트 효과 (SVG 필터) */
-.pixelate-preview {
-  filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeFlood x='0' y='0' width='1' height='1'/%3E%3CfeComposite width='2' height='2'/%3E%3CfeTile result='a'/%3E%3CfeComposite in='SourceGraphic' in2='a' operator='in'/%3E%3CfeMorphology operator='dilate' radius='1'/%3E%3C/filter%3E%3C/svg%3E#p");
 }
 
 .result-name-display {

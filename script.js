@@ -204,7 +204,6 @@ function saveImage() {
   if (retroOverlay) retroOverlay.style.display = 'none';
   const originalFilter = resultCharacter.style.filter;
   resultCharacter.style.filter = 'none';
-  captureArea.classList.remove('pixelate-preview'); // 캡쳐 시에는 CSS 픽셀 필터 제거
 
   html2canvas(captureArea, {
     backgroundColor: null,
@@ -214,7 +213,6 @@ function saveImage() {
     captureArea.style.transform = originalTransform;
     if (retroOverlay) retroOverlay.style.display = 'block';
     resultCharacter.style.filter = originalFilter;
-    captureArea.classList.add('pixelate-preview');
 
     // --- 픽셀레이트(Pixelate) 효과 ---
     const pixelBlockSize = 2; // 픽셀 크기 줄임 (3 -> 2)
@@ -270,7 +268,7 @@ function saveImage() {
 
           // 스캔라인 적용 (가로선 영역이면 RGB 값을 어둡게)
           if (isScanline) {
-            noise -= 12; // 25 -> 12로 불투명도(어둡기) 낮춤
+            noise -= 25; // 25만큼 어둡게
           }
 
           data[i] = Math.min(255, Math.max(0, data[i] + noise));
@@ -291,7 +289,6 @@ function saveImage() {
     captureArea.style.transform = originalTransform;
     if (retroOverlay) retroOverlay.style.display = 'block';
     resultCharacter.style.filter = originalFilter;
-    captureArea.classList.add('pixelate-preview');
     console.error('이미지 저장 중 오류 발생:', error);
     alert('이미지를 저장하는 데 실패했습니다.');
   });
