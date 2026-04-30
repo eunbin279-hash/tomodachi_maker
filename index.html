@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>캐릭터 커스텀 메이커</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- html2canvas 라이브러리: 화면을 이미지로 저장하기 위해 사용 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+  <!-- 화면 1: 캐릭터 에디터 -->
+  <div id="editor-screen" class="screen">
+    <!-- 상단: 이름 입력 -->
+    <div class="header-area">
+      <div class="name-input-container">
+        <input type="text" id="character-name" placeholder="이름을 입력하세요" class="name-input">
+        <span class="pencil-icon">✏️</span>
+      </div>
+    </div>
+
+    <div class="editor-container">
+
+      <!-- 왼쪽: 캐릭터 프리뷰 -->
+      <div class="preview-area">
+        <div class="character-preview" id="character-preview">
+          <!-- 1. 뒷머리 (Addhair) - 기본적으로 안 보임 -->
+          <img src="" id="preview-addhair" alt="Addhair" class="layer layer-1" style="display: none;" data-base-src="">
+
+          <!-- 2. 바디 (Body) - 기본 캐릭터 (1, 2, 3 모두 고정 배치) -->
+          <img src="images/mii_body.PNG" alt="Body 1" class="layer layer-2" id="preview-body1"
+            data-base-src="images/mii_body.PNG">
+          <img src="images/mii_body2.PNG" alt="Body 2" class="layer layer-2" id="preview-body2"
+            data-base-src="images/mii_body2.PNG">
+          <img src="images/mii_body3.PNG" alt="Body 3" class="layer layer-2" id="preview-body3">
+
+          <!-- 3. 앞머리 (Hair) -->
+          <img src="images/mii_hair_1.PNG" id="preview-hair" alt="Hair" class="layer layer-3"
+            data-base-src="images/mii_hair_1.PNG">
+
+          <!-- 4. 얼굴 (Face) -->
+          <img src="images/mii_face_1.PNG" id="preview-face" alt="Face" class="layer layer-4">
+
+          <!-- 5. 입 (Mouth) -->
+          <img src="images/mii_mouth_1.PNG" id="preview-mouth" alt="Mouth" class="layer layer-5">
+
+        </div>
+
+        <!-- 옷 색상 피커 (캐릭터 옆 배치) -->
+        <div class="clothes-color-pickers">
+          <label class="color-picker-btn body-picker" for="body-color" title="겉옷 색상">
+            <input type="color" id="body-color" value="#ffffff">
+          </label>
+          <label class="color-picker-btn body-picker" for="body2-color" title="안옷 색상">
+            <input type="color" id="body2-color" value="#ffffff">
+          </label>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 옵션 선택 영역 -->
+      <div class="options-area">
+
+        <!-- 1. 머리카락 카테고리 박스 -->
+        <div class="category-box">
+          <div class="category-header">
+            <span class="category-title">머리카락</span>
+            <!-- 커스텀 컬러 피커 버튼 -->
+            <label class="color-picker-btn" for="hair-color">
+              <input type="color" id="hair-color" value="#000000">
+            </label>
+          </div>
+          <div class="slot-grid">
+            <button class="slot active" onclick="changePart('hair', 'images/mii_hair_1.PNG', this)">
+              <img src="images/mii_hair_1.PNG" alt="Hair 1">
+            </button>
+            <button class="slot" onclick="changePart('hair', 'images/mii_hair_2.PNG', this)">
+              <img src="images/mii_hair_2.PNG" alt="Hair 2">
+            </button>
+            <button class="slot" onclick="changePart('hair', 'images/mii_hair_3.PNG', this)">
+              <img src="images/mii_hair_3.PNG" alt="Hair 3">
+            </button>
+            <button class="slot" onclick="changePart('hair', 'images/mii_hair_4.PNG', this)">
+              <img src="images/mii_hair_4.PNG" alt="Hair 4">
+            </button>
+            <button class="slot" onclick="changePart('hair', 'images/mii_hair_5.PNG', this)">
+              <img src="images/mii_hair_5.PNG" alt="Hair 5">
+            </button>
+            <button class="slot" onclick="changePart('hair', 'images/mii_hair_6.PNG', this)">
+              <img src="images/mii_hair_6.PNG" alt="Hair 6">
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. 뒷머리 카테고리 박스 (Addhair) -->
+        <div class="category-box">
+          <div class="category-header">
+            <span class="category-title">뒷머리</span>
+          </div>
+          <div class="slot-grid">
+            <!-- 첫 번째 슬롯은 뒷머리 '선택 안함' 빈칸 -->
+            <button class="slot active" onclick="changePart('addhair', '', this)">
+              <span style="font-weight: bold; color: #888;">X</span>
+            </button>
+            <button class="slot" onclick="changePart('addhair', 'images/mii_addhair_1.PNG', this)">
+              <img src="images/mii_addhair_1.PNG" alt="Addhair 1">
+            </button>
+            <button class="slot" onclick="changePart('addhair', 'images/mii_addhair_2.PNG', this)">
+              <img src="images/mii_addhair_2.PNG" alt="Addhair 2">
+            </button>
+            <button class="slot" onclick="changePart('addhair', 'images/mii_addhair_3.PNG', this)">
+              <img src="images/mii_addhair_3.PNG" alt="Addhair 3">
+            </button>
+            <button class="slot" onclick="changePart('addhair', 'images/mii_addhair_4.PNG', this)">
+              <img src="images/mii_addhair_4.PNG" alt="Addhair 4">
+            </button>
+            <button class="slot" onclick="changePart('addhair', 'images/mii_addhair_5.PNG', this)">
+              <img src="images/mii_addhair_5.PNG" alt="Addhair 5">
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. 얼굴 카테고리 박스 -->
+        <div class="category-box">
+          <div class="category-header">
+            <span class="category-title">얼굴 (눈)</span>
+          </div>
+          <div class="slot-grid">
+            <button class="slot active" onclick="changePart('face', 'images/mii_face_1.PNG', this)">
+              <img src="images/mii_face_1.PNG" alt="Face 1">
+            </button>
+            <button class="slot" onclick="changePart('face', 'images/mii_face_2.PNG', this)">
+              <img src="images/mii_face_2.PNG" alt="Face 2">
+            </button>
+            <button class="slot" onclick="changePart('face', 'images/mii_face_3.PNG', this)">
+              <img src="images/mii_face_3.PNG" alt="Face 3">
+            </button>
+            <button class="slot" onclick="changePart('face', 'images/mii_face_4.PNG', this)">
+              <img src="images/mii_face_4.PNG" alt="Face 4">
+            </button>
+            <button class="slot" onclick="changePart('face', 'images/mii_face_5.PNG', this)">
+              <img src="images/mii_face_5.PNG" alt="Face 5">
+            </button>
+            <button class="slot" onclick="changePart('face', 'images/mii_face_6.PNG', this)">
+              <img src="images/mii_face_6.PNG" alt="Face 6">
+            </button>
+            <button class="slot" onclick="changePart('face', 'images/mii_face_7.PNG', this)">
+              <img src="images/mii_face_7.PNG" alt="Face 7">
+            </button>
+            <button class="slot" onclick="changePart('face', 'images/mii_face_8.PNG', this)">
+              <img src="images/mii_face_8.PNG" alt="Face 8">
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. 입 카테고리 박스 -->
+        <div class="category-box">
+          <div class="category-header">
+            <span class="category-title">입</span>
+          </div>
+          <div class="slot-grid">
+            <button class="slot active" onclick="changePart('mouth', 'images/mii_mouth_1.PNG', this)">
+              <img src="images/mii_mouth_1.PNG" alt="Mouth 1">
+            </button>
+            <button class="slot" onclick="changePart('mouth', 'images/mii_mouth_2.PNG', this)">
+              <img src="images/mii_mouth_2.PNG" alt="Mouth 2">
+            </button>
+            <button class="slot" onclick="changePart('mouth', 'images/mii_mouth_3.PNG', this)">
+              <img src="images/mii_mouth_3.PNG" alt="Mouth 3">
+            </button>
+            <button class="slot" onclick="changePart('mouth', 'images/mii_mouth_4.PNG', this)">
+              <img src="images/mii_mouth_4.PNG" alt="Mouth 4">
+            </button>
+            <button class="slot" onclick="changePart('mouth', 'images/mii_mouth_5.PNG', this)">
+              <img src="images/mii_mouth_5.PNG" alt="Mouth 5">
+            </button>
+            <button class="slot" onclick="changePart('mouth', 'images/mii_mouth_6.PNG', this)">
+              <img src="images/mii_mouth_6.PNG" alt="Mouth 6">
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 하단 컨트롤 영역 -->
+    <div class="bottom-controls">
+      <!-- 대사 입력 탭 제거됨 -->
+      <button class="btn-primary" onclick="goToResult()">OK</button>
+    </div>
+  </div>
+
+  <!-- 화면 2: 대사 작성 창 (Speech Screen) -->
+  <div id="result-screen" class="screen hidden">
+    <!-- 이 박스 전체가 캡쳐됩니다 -->
+    <div id="capture-area" class="result-container capture-bg">
+
+      <!-- 캐릭터 결과 -->
+      <div class="result-character" id="result-character">
+        <!-- 자바스크립트로 복사됨 -->
+      </div>
+
+      <!-- 하단 반투명 검정 박스 (대사 입력) -->
+      <div class="speech-box">
+        <div class="speech-text-wrapper">
+          <span class="speech-bracket">「</span><span id="result-speech-input" contenteditable="true" class="speech-editable">대사를 입력하세요</span><span class="speech-bracket">」</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 다시하기 / 저장하기 버튼 -->
+    <div class="result-actions">
+      <button class="btn-secondary" onclick="goToEditor()">뒤로 가기</button>
+      <button class="btn-primary" onclick="saveImage()">이미지 저장</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
