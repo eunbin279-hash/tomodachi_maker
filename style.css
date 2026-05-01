@@ -1,5 +1,10 @@
-/* 기본 폰트 설정 (웹 폰트 사용 시 추가) */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+@font-face {
+  font-family: 'GulimWeb';
+  src: url('fonts/Gulim.ttf') format('truetype');
+  font-weight: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: 'Gosan';
@@ -486,7 +491,7 @@ body {
   /* 캐릭터 위쪽 (컨테이너 상단) */
   left: 35%;
   transform: translateX(-50%);
-  font-family: Gulim, '굴림', sans-serif;
+  font-family: 'GulimWeb', Gulim, '굴림', sans-serif;
   font-size: 24px;
   color: #000;
   text-shadow:
@@ -514,7 +519,7 @@ body {
 
 .speech-text-wrapper {
   color: #FFF;
-  font-family: Gulim, '굴림', sans-serif;
+  font-family: 'GulimWeb', Gulim, '굴림', sans-serif;
   font-size: 26px;
   /* 32px에서 26px로 크기 줄임 */
   font-weight: 400;
